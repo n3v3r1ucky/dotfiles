@@ -75,6 +75,7 @@ plugins=(
     zsh-autosuggestions
 )
 
+bindkey -r '^y' 
 bindkey '^y' autosuggest-accept
 
 source $ZSH/oh-my-zsh.sh
