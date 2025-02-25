@@ -29,4 +29,21 @@ return require('packer').startup(function(use)
   use 'nvim-lua/plenary.nvim'
   use 'ThePrimeagen/harpoon'
   use 'lewis6991/gitsigns.nvim'
+  use {
+      "danymat/neogen",
+      config = function()
+          require('neogen').setup {
+              enabled = true,
+              languages = {
+                  python = {
+                      template = {
+                          annotation_convention = "reST"
+                      }
+                  },
+              }
+          }
+      end,
+      -- Uncomment next line if you want to follow only stable versions
+      -- tag = "*"
+  }
 end)
