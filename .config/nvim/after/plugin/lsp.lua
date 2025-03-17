@@ -41,10 +41,23 @@ require('mason').setup({})
 require('mason-lspconfig').setup({
   -- Replace the language servers listed here 
   -- with the ones you want to install
-  ensure_installed = {'lua_ls', 'pyright', 'elixirls', 'marksman'},
+  ensure_installed = {'lua_ls', 'pyright', 'elixirls', 'marksman', 'gopls'},
   handlers = {
     function(server_name)
-      require('lspconfig')[server_name].setup({})
+        if server_name == 'gopls' then
+            require('lspconfig')[server_name].setup({
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                        gofumpt = true,
+                    },
+                },
+            })
+        else require('lspconfig')[server_name].setup({})
+        end
     end,
   },
 })
@@ -70,3 +83,20 @@ cmp.setup({
 	}),
 })
 
+-- Enable inline diagnostics (virtual text)
+vim.diagnostic.config({
+  virtual_text = true, -- Show inline diagnostics
+  signs = true,        -- Show signs in the sign column
+  update_in_insert = false, -- Don't update diagnostics while in insert mode
+  underline = true,     -- Underline the offending code
+  severity_sort = true, -- Sort diagnostics by severity
+})
+
+-- Optional: Customize the virtual text format
+vim.diagnostic.config({
+  virtual_text = {
+    source = "always",  -- Show the source of the diagnostic
+    prefix = "■",       -- Custom prefix for virtual text
+    spacing = 4,        -- Spacing between the prefix and the message
+  },
+})

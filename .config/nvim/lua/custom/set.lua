@@ -30,3 +30,5 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "120"
 
 vim.g.mapleader = " "
+
+vim.g.lsp_diagnostics_echo_cursor = 1
