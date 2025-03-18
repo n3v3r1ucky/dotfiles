@@ -11,6 +11,22 @@ else
   config.default_domain = 'local'
 end
 
+-- Enable the status bar
+config.enable_tab_bar = true
+config.status_update_interval = 1000 -- Update every second
+config.use_fancy_tab_bar = false
+
+-- Custom status bar
+wezterm.on('update-status', function(window, pane)
+  -- Get the current time
+  local time = wezterm.strftime '%H:%M:%S'
+
+  -- Update the status bar
+  window:set_right_status(wezterm.format {
+    { Text = ' 󰥔 ' .. time }, -- Add a clock icon (󰥔) before the time
+  })
+end)
+
 -- Set the leader key to Alt+Shift (using 'a' as a placeholder)
 config.leader = { key = 'a', mods = 'ALT|SHIFT' }
 
