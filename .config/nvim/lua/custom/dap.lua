@@ -71,30 +71,7 @@ local set_python_dap = function()
 end
 
 local setup_dap_go = function()
-    require('dap-go').setup({
-        -- Additional configuration options (optional)
-        dap_configurations = {
-            {
-                type = "delve",
-                name = "Debug (Arguments)",
-                request = "launch",
-                program = "${file}",
-                args = function()
-                    local args_string = vim.fn.input('Arguments: ')
-                    return vim.split(args_string, " +")
-                end,
-            },
-            -- You can add more custom configurations here
-        },
-        -- delve configuration
-        delve = {
-            path = "dlv",  -- path to delve executable
-            initialize_timeout_sec = 20,
-            port = "${port}",
-            args = {},
-            build_flags = "",
-        },
-    })
+    require('dap-go').setup()
 end
 
 setup_dap_go()
