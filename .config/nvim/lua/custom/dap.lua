@@ -1,5 +1,13 @@
 local dap = require("dap")
+local dapui = require("dapui")
 dap.set_log_level('TRACE')
+
+dap.listeners.before.attach.dapui_config = function()
+  dapui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  dapui.open()
+end
 
 local function get_python_path()
     local python_bin = "python3"
@@ -79,3 +87,5 @@ set_python_dap()
 vim.api.nvim_create_autocmd({"DirChanged", "BufEnter"}, {
     callback = function() set_python_dap() end,
 })
+require("dapui").setup()
+
