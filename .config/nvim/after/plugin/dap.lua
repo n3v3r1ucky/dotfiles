@@ -27,3 +27,5 @@ vim.keymap.set('n', '<Leader>dc', function() require('dapui').close() end)
 vim.keymap.set('n', '<Leader>t', function() require('dap-python').test_method() end)
 vim.keymap.set('n', '<Leader>ct', function() require('dap-python').test_class() end)
 
+vim.keymap.set('n', '<Leader>t', function() require('dap-go').debug_test() end)
+
