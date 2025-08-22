@@ -1,6 +1,6 @@
-git clone --bare https://github.com/n3v3r1ucky/dotfiles.git $HOME/.config
+git clone --bare https://github.com/n3v3r1ucky/dotfiles.git $HOME/.cfg-git
 function config {
-   git --git-dir=$HOME/.config/ --work-tree=$HOME $@
+   git --git-dir=$HOME/.cfg-git/ --work-tree=$HOME $@
 }
 mkdir -p .config-backup
 config checkout
