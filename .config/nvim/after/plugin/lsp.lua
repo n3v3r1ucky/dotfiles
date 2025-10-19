@@ -3,6 +3,8 @@ vim.opt.signcolumn = 'yes'
 
 -- Add cmp_nvim_lsp capabilities settings to lspconfig
 -- This should be executed before you configure any language server
+
+-- Set global defaults for all servers
 local lspconfig_defaults = require('lspconfig').util.default_config
 lspconfig_defaults.capabilities = vim.tbl_deep_extend(
   'force',
@@ -89,8 +91,9 @@ vim.diagnostic.config({
 -- Optional: Customize the virtual text format
 vim.diagnostic.config({
   virtual_text = {
-    source = "always",  -- Show the source of the diagnostic
+    source = true,  -- Show the source of the diagnostic
     prefix = "■",       -- Custom prefix for virtual text
     spacing = 4,        -- Spacing between the prefix and the message
   },
 })
+
