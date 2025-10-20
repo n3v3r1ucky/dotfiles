@@ -118,4 +118,33 @@ return {
     -- Uncomment next line if you want to follow only stable versions
     -- tag = "*"
   },
+  {
+      "nvim-tree/nvim-tree.lua",
+      version = "1.14", -- Recommended to use a specific version tag like "v1" or "v1.23"
+      lazy = false, -- Set to true for lazy loading, then define events/commands to trigger it
+      dependencies = {
+          "nvim-tree/nvim-web-devicons", -- Optional, for file icons
+      },
+      config = function()
+          -- Disable netrw at the very start of your init.lua to prevent conflicts
+          vim.g.loaded_netrw = 1
+          vim.g.loaded_netrwPlugin = 1
+
+          require("nvim-tree").setup({
+              -- Your nvim-tree configuration options go here
+              filters = {
+                  dotfiles = false,
+              },
+              actions = {
+                  open_file = {
+                      quit_on_open = true,
+                  },
+              },
+              view = {
+                  width = 30,
+              },
+              -- etc.
+          })
+      end,
+  },
 }
