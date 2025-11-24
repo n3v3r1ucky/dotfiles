@@ -36,26 +36,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- You'll find a list of language servers here:
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 require('mason').setup({})
-require('mason-lspconfig').setup({
-  ensure_installed = {'lua_ls', 'pyright', 'elixirls', 'marksman', 'gopls'},
-  handlers = {
-    function(server_name)
-        if server_name == 'gopls' then
-            require('lspconfig')[server_name].setup({
-                settings = {
-                    gopls = {
-                        analyses = {
-                            unusedparams = true,
-                        },
-                        staticcheck = true,
-                        gofumpt = true,
-                    },
+
+vim.lsp.config('gopls', {
+    settings = {
+        gopls = {
+            analysis = {
+                unusedparams = true,
+            },
+            staticcheck = true,
+            gofumpt = true,
+        },
+    },
+})
+
+vim.lsp.config('basedpyright', {
+    settings = {
+        basedpyright = {
+            analysis = {
+                typeCheckingMode = "basic", -- e.g., "off", "basic", "standard"
+                diagnosticSeverityOverrides = {
+                    reportUnknownMemberType = false,
                 },
-            })
-        else require('lspconfig')[server_name].setup({})
-        end
-    end,
-  },
+            },
+        }
+    }
+})
+
+require('mason-lspconfig').setup({
+  ensure_installed = {'lua_ls', 'basedpyright', 'elixirls', 'marksman', 'gopls'},
 })
 
 local cmp = require('cmp')

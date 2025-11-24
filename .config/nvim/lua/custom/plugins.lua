@@ -132,6 +132,11 @@ return {
 
           require("nvim-tree").setup({
               -- Your nvim-tree configuration options go here
+              git = {
+                  enable = true,
+                  ignore = false, -- Set this to false to show ignored files
+                  timeout = 500,
+              },
               filters = {
                   dotfiles = false,
               },
