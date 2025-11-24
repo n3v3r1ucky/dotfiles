@@ -4,14 +4,6 @@ vim.opt.signcolumn = 'yes'
 -- Add cmp_nvim_lsp capabilities settings to lspconfig
 -- This should be executed before you configure any language server
 
--- Set global defaults for all servers
-local lspconfig_defaults = require('lspconfig').util.default_config
-lspconfig_defaults.capabilities = vim.tbl_deep_extend(
-  'force',
-  lspconfig_defaults.capabilities,
-  require('cmp_nvim_lsp').default_capabilities()
-)
-
 -- This is where you enable features that only work
 -- if there is a language server active in the file
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -35,8 +27,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- You'll find a list of language servers here:
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
-require('mason').setup({})
-
 vim.lsp.config('gopls', {
     settings = {
         gopls = {
@@ -50,21 +40,23 @@ vim.lsp.config('gopls', {
 })
 
 vim.lsp.config('basedpyright', {
-    settings = {
-        basedpyright = {
-            analysis = {
-                typeCheckingMode = "basic", -- e.g., "off", "basic", "standard"
-                diagnosticSeverityOverrides = {
-                    reportUnknownMemberType = false,
-                },
-            },
-        }
-    }
+  settings = {
+    basedpyright = {
+      analysis = {
+        typeCheckingMode = "basic", -- Change to "basic" or "standard" if you want some type checking
+      },
+      python = {
+        analysis = {
+          -- Add this to ignore specific directories or files
+          ignore = { "**/node_modules/**", "**/__pycache__/**" },
+        },
+      },
+    },
+  },
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
 })
 
-require('mason-lspconfig').setup({
-  ensure_installed = {'lua_ls', 'basedpyright', 'elixirls', 'marksman', 'gopls'},
-})
+vim.lsp.enable({'lua_ls', 'basedpyright', 'elixirls', 'marksman', 'gopls'})
 
 local cmp = require('cmp')
 
