@@ -6,6 +6,7 @@ vim.opt.signcolumn = 'yes'
 
 -- This is where you enable features that only work
 -- if there is a language server active in the file
+local builtin = require('telescope.builtin')
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
@@ -18,10 +19,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
     vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
     vim.keymap.set('n', 'gS', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-    vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-    vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-    vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+    vim.keymap.set('n', 'cr', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+    vim.keymap.set({'n', 'x'}, 'cf', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
+    vim.keymap.set('n', 'ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
     vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    vim.keymap.set('n', '<leader>ss', '<cmd>Telescope lsp_dynamic_workspace_symbols<CR>', opts)
   end,
 })
 
@@ -40,20 +42,27 @@ vim.lsp.config('gopls', {
 })
 
 vim.lsp.config('basedpyright', {
-  settings = {
-    basedpyright = {
-      analysis = {
-        typeCheckingMode = "basic", -- Change to "basic" or "standard" if you want some type checking
-      },
-      python = {
-        analysis = {
-          -- Add this to ignore specific directories or files
-          ignore = { "**/node_modules/**", "**/__pycache__/**" },
+    settings = {
+        basedpyright = {
+            analysis = {
+                -- These settings can improve symbol discovery
+                indexing = true,  -- Enable indexing for better symbol support
+                autoImportCompletions = true,
+                -- Add these for better workspace symbol support
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "workspace",  -- or "openFilesOnly"
+                typeCheckingMode = "basic", -- Change to "basic" or "standard" if you want some type checking
+            },
+            python = {
+                analysis = {
+                    -- Add this to ignore specific directories or files
+                    ignore = { "**/node_modules/**", "**/__pycache__/**" },
+                },
+            },
         },
-      },
     },
-  },
-  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+    capabilities = vim.lsp.protocol.make_client_capabilities(),
 })
 
 vim.lsp.enable({'lua_ls', 'basedpyright', 'elixirls', 'marksman', 'gopls'})

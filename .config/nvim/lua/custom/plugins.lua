@@ -10,8 +10,6 @@ return {
   -- Telescope: fuzzy finder
   {
     "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
-    -- or                            , branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "BurntSushi/ripgrep",
@@ -57,15 +55,6 @@ return {
       "hrsh7th/cmp-nvim-lsp",
     },
   },
-
-  -- Mason: LSP installer
-  {
-    "williamboman/mason.nvim",
-    dependencies = {
-      "williamboman/mason-lspconfig.nvim",
-    },
-  },
-
   -- Debug Adapter Protocol
   {
     "mfussenegger/nvim-dap",
@@ -119,6 +108,15 @@ return {
     -- tag = "*"
   },
   {
+      "ThePrimeagen/refactoring.nvim",
+      dependencies = {
+          "nvim-lua/plenary.nvim",
+          "nvim-treesitter/nvim-treesitter",
+      },
+      lazy = false,
+      opts = {},
+  },
+  {
       "nvim-tree/nvim-tree.lua",
       version = "1.14", -- Recommended to use a specific version tag like "v1" or "v1.23"
       lazy = false, -- Set to true for lazy loading, then define events/commands to trigger it
@@ -150,6 +148,19 @@ return {
               },
               -- etc.
           })
+      end,
+  },
+  {
+      "antosha417/nvim-lsp-file-operations",
+      dependencies = {
+          "nvim-lua/plenary.nvim",
+          -- Uncomment whichever supported plugin(s) you use
+          "nvim-tree/nvim-tree.lua",
+          -- "nvim-neo-tree/neo-tree.nvim",
+          -- "simonmclean/triptych.nvim"
+      },
+      config = function()
+          require("lsp-file-operations").setup()
       end,
   },
 }
