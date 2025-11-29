@@ -43,11 +43,6 @@ return {
     "tpope/vim-fugitive",
   },
 
-  -- LSP configuration
-  {
-    "neovim/nvim-lspconfig",
-  },
-
   -- Autocompletion
   {
     "hrsh7th/nvim-cmp",
@@ -117,46 +112,22 @@ return {
       opts = {},
   },
   {
-      "nvim-tree/nvim-tree.lua",
-      version = "1.14", -- Recommended to use a specific version tag like "v1" or "v1.23"
-      lazy = false, -- Set to true for lazy loading, then define events/commands to trigger it
-      dependencies = {
-          "nvim-tree/nvim-web-devicons", -- Optional, for file icons
-      },
-      config = function()
-          -- Disable netrw at the very start of your init.lua to prevent conflicts
-          vim.g.loaded_netrw = 1
-          vim.g.loaded_netrwPlugin = 1
-
-          require("nvim-tree").setup({
-              -- Your nvim-tree configuration options go here
-              git = {
-                  enable = true,
-                  ignore = false, -- Set this to false to show ignored files
-                  timeout = 500,
-              },
-              filters = {
-                  dotfiles = false,
-              },
-              actions = {
-                  open_file = {
-                      quit_on_open = true,
-                  },
-              },
-              view = {
-                  width = 30,
-              },
-              -- etc.
-          })
-      end,
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons", -- optional, but recommended
+    },
+    lazy = false, -- neo-tree will lazily load itself
   },
   {
       "antosha417/nvim-lsp-file-operations",
       dependencies = {
           "nvim-lua/plenary.nvim",
           -- Uncomment whichever supported plugin(s) you use
-          "nvim-tree/nvim-tree.lua",
-          -- "nvim-neo-tree/neo-tree.nvim",
+          --"nvim-tree/nvim-tree.lua",
+          "nvim-neo-tree/neo-tree.nvim",
           -- "simonmclean/triptych.nvim"
       },
       config = function()
