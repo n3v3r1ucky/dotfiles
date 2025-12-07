@@ -7,7 +7,7 @@ vim.lsp.config('*', {
     capabilities = capabilities
 })
 
-vim.lsp.enable({ 'basedpyright', "lua_ls" })
+vim.lsp.enable({ 'basedpyright', 'lua_ls' })
 
 -- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
@@ -57,17 +57,27 @@ cmp.setup({
     }),
 })
 
+-- Install a Nerd Font first (e.g., FiraCode Nerd Font)
+local icons = {
+  error = "",
+  warn = "",
+  hint = "",
+  info = "",
+}
+
 -- Enable inline diagnostics (virtual text)
 vim.diagnostic.config({
-    virtual_text = true,    -- Show inline diagnostics
-    signs = true,           -- Show signs in the sign column
     update_in_insert = false, -- Don't update diagnostics while in insert mode
     underline = true,       -- Underline the offending code
     severity_sort = true,   -- Sort diagnostics by severity
-})
-
--- Optional: Customize the virtual text format
-vim.diagnostic.config({
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = icons.error,
+            [vim.diagnostic.severity.WARN] = icons.warn,
+            [vim.diagnostic.severity.INFO] = icons.info,
+            [vim.diagnostic.severity.HINT] = icons.hint,
+        },
+    },
     virtual_text = {
         source = true, -- Show the source of the diagnostic
         prefix = "■", -- Custom prefix for virtual text

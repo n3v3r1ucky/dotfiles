@@ -26,6 +26,7 @@ return {
     cmd = { 'basedpyright-langserver', '--stdio' },
     filetypes = { 'python' },
     root_markers = {
+        '.venv',
         'pyrightconfig.json',
         'pyproject.toml',
         'setup.py',
