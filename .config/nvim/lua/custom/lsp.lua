@@ -7,7 +7,7 @@ vim.lsp.config('*', {
     capabilities = capabilities
 })
 
-vim.lsp.enable({ 'basedpyright', 'lua_ls' })
+vim.lsp.enable({ 'basedpyright', 'lua_ls', 'rust_analyzer'})
 
 -- Reserve a space in the gutter
 vim.opt.signcolumn = 'yes'
@@ -61,7 +61,7 @@ cmp.setup({
 local icons = {
   error = "",
   warn = "",
-  hint = "",
+  hint = "󰋗",
   info = "",
 }
 
